@@ -1,0 +1,22 @@
+name: "Build"
+on:
+  push:
+
+
+permissions:
+  contents: write # for Git to git push
+
+jobs:
+  job_build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install packages
+        run: |
+          git config --global user.email ${{ secrets.EMAIL }}
+          git config --global user.name ${{ secrets.NAME }}
+          git clone --depth 1 https://github.com/siwind/luci-app-vlmcsd.git
+          find ./* -maxdepth 1 -type d -name ".git" -exec rm -rf {} +
+          git add .
+          git commit -m "update luci-app-vlmcsd"
+          git push "https://${{ secrets.NAME }}:${{ github.token }}@github.com/${{ github.repository }}.git" master
