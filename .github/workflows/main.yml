@@ -16,7 +16,7 @@ jobs:
           git config --global user.email ${{ secrets.EMAIL }}
           git config --global user.name ${{ secrets.NAME }}
           git clone --depth 1 https://github.com/siwind/luci-app-vlmcsd.git
-          find ./* -maxdepth 1 -type d -name ".git" -exec rm -rf {} +
+          rm -rf luci-app-vlmcsd/.git
           git add .
           git commit -m "update luci-app-vlmcsd"
           git push "https://${{ secrets.NAME }}:${{ github.token }}@github.com/${{ github.repository }}.git" master
